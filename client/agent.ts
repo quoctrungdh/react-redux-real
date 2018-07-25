@@ -1,3 +1,5 @@
+import { promises } from "fs";
+
 const baseUrl = 'http://locahost:3000'
 
 const requests = {
@@ -25,6 +27,17 @@ const auth = {
     return requests.get('/user')
   },
   login(userCredential) {
-    return requests.post('/login', userCredential)
+    // return requests.post('/login', userCredential)
+    const { username, password } = userCredential;
+
+    if (password) {
+      return Promise.resolve({ token: 'ok' })
+    }
+
+    return Promise.reject(new Error('401'))
   }
+}
+
+export {
+  auth
 }

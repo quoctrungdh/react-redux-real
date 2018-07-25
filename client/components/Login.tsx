@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react'
+import { loginRequest } from '../epics/loginEpic';
 
 
 function LoginForm(props) {
@@ -40,7 +43,7 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target)
+    this.props.login(this.state)
   }
 
   handleChangeField = (fieldType) => (e) => {
@@ -58,4 +61,11 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    login: loginRequest
+  },
+  dispatch
+)
+
+export default connect(null, mapDispatchToProps)(Login);
